@@ -7,6 +7,9 @@ pipeline {
     environment {
         sitename = "www.candura.com"
     }
+    parameters {
+        choice(name: 'STRICTHOST', choices: ['No', 'Yes'], description: 'Strict host key checking')
+    }
     stages {
         stage('Clone Git') {
             steps {
@@ -26,7 +29,7 @@ pipeline {
         stage('Deploy') {
             when {branch 'main'}	
             steps {
-                sh "scp -rv -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null build/* ${username}@${server_ip}:/var/www/${sitename}/"
+                sh "scp -rv -o StrictHostKeyChecking=${params.STRICTHOST} -o UserKnownHostsFile=/dev/null build/* ${username}@${server_ip}:/var/www/${sitename}/"
             }
         }
     }
