@@ -4,7 +4,7 @@ def username = "ubuntu"
 
 pipeline {
     agent any
-    triggers { pollSCM('H/3 * * * *') }
+    triggers { pollSCM('H/15 * * * *') }
     environment {
         sitename = "www.candura.com"
     }
@@ -42,5 +42,10 @@ pipeline {
                 sh "scp -rv -o StrictHostKeyChecking=${params.STRICTHOST} -o UserKnownHostsFile=/dev/null build/* ${username}@${server_ip}:/var/www/${sitename}/"
             }
         }
+    post {
+        always {
+            echo 'Send a notification message via email or something else'
+        }
+    }
     }
 }
