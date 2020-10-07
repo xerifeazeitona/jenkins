@@ -21,9 +21,18 @@ pipeline {
                 sh 'npm install'
             }
         }
-        stage('Build') {
-            steps {
-                sh 'npm run build'
+        stage('Build and Test') {
+            parallel {
+                stage('Build') {
+                    steps {
+                        sh 'npm run build'
+                    }
+                }
+                stage('Test') {
+                    steps {
+                        sh 'npm test -- --watchAll=false'
+                    }
+                }
             }
         }
         stage('Deploy') {
