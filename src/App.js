@@ -13,7 +13,7 @@ function App() {
           target="_blank"
           rel="noopener noreferrer"
         >
-          Learn Devops at www.lernard.com
+          Created by Section4
         </a>
       </header>
     </div>
