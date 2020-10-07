@@ -42,10 +42,10 @@ pipeline {
                 sh "scp -rv -o StrictHostKeyChecking=${params.STRICTHOST} -o UserKnownHostsFile=/dev/null build/* ${username}@${server_ip}:/var/www/${sitename}/"
             }
         }
+    }
     post {
         always {
             echo 'Send a notification message via email or something else'
         }
-    }
     }
 }
