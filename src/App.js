@@ -13,7 +13,7 @@ function App() {
           target="_blank"
           rel="noopener noreferrer"
         >
-          Section 5 - triggered automatically!!
+          This Section 5 build was automatically triggered by Jenkins!!
         </a>
       </header>
     </div>
