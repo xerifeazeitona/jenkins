@@ -23,7 +23,7 @@ pipeline {
         stage('Deploy') {
             when {branch 'main'}	
             steps {
-                sh 'scp -rv -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null build/* ${username}@${server_ip}:/var/www/www.candura.com/'
+                sh "scp -rv -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null build/* ${username}@${server_ip}:/var/www/www.candura.com/"
             }
         }
     }
