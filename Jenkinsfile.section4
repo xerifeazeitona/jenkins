@@ -1,7 +1,3 @@
-//Variables declaration
-def server_ip = "192.168.122.223"
-def username = "ubuntu"
-
 pipeline {
     agent any
     stages {
@@ -23,7 +19,7 @@ pipeline {
         stage('Deploy') {
             when {branch 'main'}	
             steps {
-                sh 'scp -rv -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null build/* ${username}@${server_ip}:/var/www/www.candura.com/'
+                sh 'scp -rv -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null /var/lib/jenkins/workspace/Section4_main/build/* ubuntu@192.168.122.223:/var/www/www.candura.com/'
             }
         }
     }
