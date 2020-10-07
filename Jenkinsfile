@@ -4,6 +4,7 @@ def username = "ubuntu"
 
 pipeline {
     agent any
+    triggers { pollSCM('H/3 * * * *') }
     environment {
         sitename = "www.candura.com"
     }
