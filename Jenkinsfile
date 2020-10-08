@@ -25,7 +25,7 @@ pipeline {
                     """
                     script {
                         server_ip = sh (
-                            script: './get_ip.sh',
+                            script: 'get_ip.sh',
                             returnStdout: true
                         ).trim
                         echo "The server IP is ${server_ip}"
