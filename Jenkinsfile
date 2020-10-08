@@ -23,7 +23,7 @@ pipeline {
                         terraform init
                         terraform apply -auto-approve
                     """,
-                    server_ip = sh """./get_ip.sh"""
+                    server_ip = sh script:"./get_ip.sh", label: "test"
 //                    script {
 //                        server_ip = sh (
 //                            script: './get_ip.sh',
