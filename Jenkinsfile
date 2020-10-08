@@ -22,11 +22,10 @@ pipeline {
                         cd terraform_web_server
                         terraform init
                         terraform apply -auto-approve
-                        ./get_ip.sh
                     """
                     script {
                         server_ip = sh (
-                            script: 'cat ip.txt',
+                            script: './get_ip.sh',
                             returnStdout: true
                         ).trim
                         echo "The server IP is ${server_ip}"
