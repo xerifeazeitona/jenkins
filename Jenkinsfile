@@ -21,7 +21,8 @@ pipeline {
                     sh """
                         cd terraform_web_server
                         terraform init
-                        terraform apply -auto-approve
+//                        terraform apply -auto-approve
+                        terraform destroy -auto-approve
                     """
                     script {
                         server_ip = sh (
