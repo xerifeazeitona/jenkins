@@ -25,7 +25,7 @@ pipeline {
                     """
                     script {
                         serverip = sh (
-                            script: 'terraform output | grep 192 | cut -d\'\"\' -f2'
+                            script: 'terraform output | grep 192 | cut -d\'"\' -f2'
                             returnStdout: true
                         ).trim
                         echo "The server IP is ${server_ip}"
