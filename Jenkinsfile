@@ -22,15 +22,14 @@ pipeline {
                         cd terraform_web_server
                         terraform init
                         terraform apply -auto-approve
-                    """,
-                    server_ip = sh script:"./get_ip.sh", label: "test"
-//                    script {
-//                        server_ip = sh (
-//                            script: './get_ip.sh',
-//                            returnStdout: true
-//                        ).trim
-//                        echo "The server IP is ${server_ip}"
-//                    }
+                    """
+                    script {
+                        server_ip = sh (
+                            script: 'terraform output',
+                            returnStdout: true
+                        ).trim
+                        echo "The server IP is ${server_ip}"
+                    }
                 }
             }
         }       
