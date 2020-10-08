@@ -22,7 +22,7 @@ pipeline {
                         cd terraform_web_server
                         terraform init
                         terraform apply -auto-approve
-                        terraform output | grep 192 | cut -d'"' -f2 > ip.txt
+                        get_ip.sh
                     """
                     script {
                         server_ip = sh (
