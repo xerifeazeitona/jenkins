@@ -23,13 +23,14 @@ pipeline {
                         terraform init
                         terraform apply -auto-approve
                     """
-                    script {
-                        server_ip = sh (
-                            script: './get_ip.sh',
-                            returnStdout: true
-                        ).trim
-                        echo "The server IP is ${server_ip}"
-                    }
+                    server_ip = sh """./get_ip.sh"""
+//                    script {
+//                        server_ip = sh (
+//                            script: './get_ip.sh',
+//                            returnStdout: true
+//                        ).trim
+//                        echo "The server IP is ${server_ip}"
+//                    }
                 }
             }
         }       
