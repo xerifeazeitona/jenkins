@@ -24,7 +24,7 @@ pipeline {
                         teraform apply -auto-approve
                     """
                     script {
-                        serverip = sh (
+                        server_ip = sh (
                             script: 'terraform output | grep 192 | cut -d\'"\' -f2',
                             returnStdout: true
                         ).trim
