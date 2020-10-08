@@ -15,8 +15,8 @@ pipeline {
         stage ('Provision - Terraform') {
             steps {
                 dir('ansible') {
-                    git branch: 'master'
-                    credentialsId: 'eec3318a-0c54-438e-96b1-6310ffeaaee0'
+                    git branch: 'master',
+                    credentialsId: 'eec3318a-0c54-438e-96b1-6310ffeaaee0',
                     url: 'https://github.com/xerifeazeitona/ansible.git'
                     sh """
                         cd terraform_web_server
