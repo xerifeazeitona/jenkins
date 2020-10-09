@@ -7,6 +7,7 @@ pipeline {
     triggers { pollSCM('H/15 * * * *') }
     environment {
         sitename = "www.candura.com"
+        SERVERIP = "0.0.0.0"
     }
     parameters {
         choice(name: 'STRICTHOST', choices: ['No', 'Yes'], description: 'Strict host key checking')
@@ -22,6 +23,7 @@ pipeline {
                         cd terraform_web_server
                         terraform init
                         terraform apply -auto-approve
+                        echo \$SERVERIP
                         awk -F '"' '/192/{print \$2;exit;}' terraform.tfstate
                     """
                     script {
