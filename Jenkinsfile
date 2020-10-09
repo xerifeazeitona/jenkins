@@ -21,9 +21,8 @@ pipeline {
                     sh """
                         cd terraform_web_server
                         terraform init
-                        terraform apply -auto-approve
+                        terraform destroy -auto-approve
                         awk -F '"' '/192/{print \$2;exit;}' terraform.tfstate > ~/ip.txt
-                        cat ~/ip.txt
                     """
                     script {
                         server_ip = sh (script: 'cat ~/ip.txt', returnStdout: true).trim()
