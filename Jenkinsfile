@@ -24,7 +24,8 @@ pipeline {
                         terraform apply -auto-approve
                     """
                     script {
-                        def command = 'terraform output | grep 192 | cut -d\'"\' -f2'
+                        //def command = 'terraform output | grep 192 | cut -d\'"\' -f2'
+                        def command = './get_ip.sh'
                         echo command
                         server_ip = sh returnStdout: true, script: command
                         echo "The server IP is ${server_ip}"
