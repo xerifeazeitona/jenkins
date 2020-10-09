@@ -59,6 +59,31 @@ pipeline {
                     """
                 }
             }
-        }             
+        }
+        stage('Install Dependencies') {
+            steps {
+                sh 'npm install'
+            }
+        }
+        stage('Build and Test') {
+            parallel {
+                stage('Build') {
+                    steps {
+                        sh 'npm run build'
+                    }
+                }
+                stage('Test') {
+                    steps {
+                        sh 'npm test -- --watchAll=false'
+                    }
+                }
+            }
+        }
+        stage('Deploy') {
+            when {branch 'master'}	
+            steps {
+                sh "scp -rv -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null build/* ${username}@${server_ip}:/var/www/${sitename}/"
+            }
+        }
     }
 }
