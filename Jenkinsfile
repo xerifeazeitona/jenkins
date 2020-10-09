@@ -22,8 +22,7 @@ pipeline {
                     sh """
                         cd terraform_web_server
                         terraform init
-                        terraform apply -auto-approve
-                        ./get_ip
+                        terraform destroy -auto-approve
                     """
                     script {
                         //def command = 'terraform output | grep 192 | cut -d\'"\' -f2'
