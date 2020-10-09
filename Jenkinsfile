@@ -7,6 +7,7 @@ pipeline {
     triggers { pollSCM('H/15 * * * *') }
     environment {
         sitename = "www.candura.com"
+        SERVERIP
     }
     parameters {
         choice(name: 'STRICTHOST', choices: ['No', 'Yes'], description: 'Strict host key checking')
@@ -22,12 +23,13 @@ pipeline {
                         cd terraform_web_server
                         terraform init
                         terraform apply -auto-approve
+                        ./get_ip
                     """
                     script {
                         //def command = 'terraform output | grep 192 | cut -d\'"\' -f2'
-                        def command = './get_ip.sh'
-                        echo command
-                        server_ip = sh returnStdout: true, script: command
+                        //def command = './get_ip.sh'
+                        //echo command
+                        server_ip = ${SERVERIP}
                         echo "The server IP is ${server_ip}"
                     }
                 }
