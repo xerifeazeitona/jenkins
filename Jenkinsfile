@@ -21,13 +21,10 @@ pipeline {
                     sh """
                         cd terraform_web_server
                         terraform init
-                        terraform destroy -auto-approve
+                        terraform apply -auto-approve
                     """
                     script {
-                        server_ip = sh (
-                            script: 'terraform output',
-                            returnStdout: true
-                        ).trim
+                        server_ip = sh returnStdout: true, script: 'terraform output | grep 192 | cut -d\'"\' -f2'
                         echo "The server IP is ${server_ip}"
                     }
                 }
