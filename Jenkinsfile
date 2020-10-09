@@ -9,10 +9,12 @@ pipeline {
         sitename = "www.candura.com"
     }
     parameters {
-        choice(name: 'STRICTHOST', choices: ['No', 'Yes'], description: 'Strict host key checking')
+        choice(name: 'Provision', choices: ['No', 'Yes', 'Destroy'], description: 'Toggle provisioning an instance')
+        choice(name: 'Configure', choices: ['No', 'Yes'], description: 'Toggle configuring an instance')
     }
     stages {
         stage ('Provision - Terraform') {
+            when {expression { params.Provision == 'Yes' }}
             steps {
                 dir('ansible') {
                     git branch: 'master',
@@ -31,8 +33,19 @@ pipeline {
                     }
                 }
             }
+            when {expression { params.Provision == 'Destroy' }}
+            steps {
+                dir('ansible') {
+                    sh """
+                        cd terraform_web_server
+                        terraform destroy -auto-approve
+                        rm -f ~/ip.txt
+                    """
+                }
+            }
         }  
         stage ('Configure - Ansible') {
+            when {expression { params.Provision == 'Yes' }}
             steps {
                 dir('ansible') {
                     sh """
