@@ -24,7 +24,7 @@ pipeline {
                         terraform init
                         terraform apply -auto-approve
                         printenv
-                        set SERVERIP = awk -F '"' '/192/{print \$2;exit;}' terraform.tfstate
+                        export SERVERIP = awk -F '"' '/192/{print \$2;exit;}' terraform.tfstate
                         echo \$SERVERIP
                     """
                     script {
