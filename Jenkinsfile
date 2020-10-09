@@ -26,7 +26,7 @@ pipeline {
                         cat ~/ip.txt
                     """
                     script {
-                        server_ip = sh (script: 'cat ~/ip.txt', returnStdout: true)
+                        server_ip = sh (script: 'cat ~/ip.txt', returnStdout: true).trim
                         echo "The server IP is ${server_ip}"
                     }
                 }
