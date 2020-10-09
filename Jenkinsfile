@@ -47,7 +47,7 @@ pipeline {
             }
         }  
         stage ('Configure - Ansible') {
-            when {expression { params.Provision == 'Yes' }}
+            when {expression { params.Configure == 'Yes' }}
             steps {
                 dir('ansible') {
                     sh """
