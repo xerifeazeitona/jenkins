@@ -21,7 +21,8 @@ pipeline {
                     sh """
                         cd terraform_web_server
                         terraform init
-                        terraform destroy -auto-approve
+                        terraform apply -auto-approve
+                        rm -f ~/ip.txt
                         awk -F '"' '/192/{print \$2;exit;}' terraform.tfstate > ~/ip.txt
                     """
                     script {
@@ -30,6 +31,19 @@ pipeline {
                     }
                 }
             }
-        }       
+        }  
+        stage ('Configure - Ansible') {
+            steps {
+                dir('ansible') {
+                    sh """
+                        cd section6
+                        rm -f hosts
+                        echo "[web]\nweb1 ansible_host=${server_ip}" > hosts
+                        while ! nc -z -w 5 ${server_ip} 22; do echo "waiting for server..."; sleep 5; done
+                        ansible-playbook -i hosts playbook_web.yml
+                    """
+                }
+            }
+        }             
     }
 }
