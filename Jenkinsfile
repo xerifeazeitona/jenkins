@@ -7,7 +7,7 @@ pipeline {
     triggers { pollSCM('H/15 * * * *') }
     environment {
         sitename = "www.candura.com"
-        SERVERIP
+        SERVERIP = "127.0.0.1"
     }
     parameters {
         choice(name: 'STRICTHOST', choices: ['No', 'Yes'], description: 'Strict host key checking')
