@@ -23,8 +23,8 @@ pipeline {
                         cd terraform_web_server
                         terraform init
                         terraform apply -auto-approve
+                        SERVERIP = awk -F '"' '/192/{print \$2;exit;}' terraform.tfstate
                         echo \$SERVERIP
-                        awk -F '"' '/192/{print \$2;exit;}' terraform.tfstate
                     """
                     script {
                      //   server_ip = sh (script: 'awk -F \'"\' \'/192/{print $2;exit;}\' terraform.tfstate', returnStdout: true)
