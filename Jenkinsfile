@@ -80,7 +80,7 @@ pipeline {
             }
         }
         stage('Deploy') {
-            when {branch 'master'}	
+            when {branch 'main'}	
             steps {
                 sh "scp -rv -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null build/* ${username}@${server_ip}:/var/www/${sitename}/"
             }
