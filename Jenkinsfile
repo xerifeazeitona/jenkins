@@ -22,9 +22,10 @@ pipeline {
                         cd terraform_web_server
                         terraform init
                         terraform apply -auto-approve
+                        awk -F \'"\' \'/192/{print $2;exit;}\
                     """
                     script {
-                        server_ip = sh (script: 'awk -F \'"\' \'/192/{print $2;exit;}\' terraform.tfstate', returnStdout: true)
+                     //   server_ip = sh (script: 'awk -F \'"\' \'/192/{print $2;exit;}\' terraform.tfstate', returnStdout: true)
                         echo "The server IP is ${server_ip}"
                     }
                 }
