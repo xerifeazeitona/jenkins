@@ -33,6 +33,8 @@ pipeline {
                     }
                 }
             }
+        }  
+        stage ('Provision - Destroy') {
             when {expression { params.Provision == 'Destroy' }}
             steps {
                 dir('ansible') {
