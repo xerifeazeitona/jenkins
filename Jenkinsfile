@@ -45,8 +45,8 @@ pipeline {
                         terraform destroy -auto-approve
                         rm -f ~/ip.txt
                     """
+                    currentBuild.result = 'SUCCESS'
                 }
-                return
             }
         }  
         stage ('Configure - Ansible') {
