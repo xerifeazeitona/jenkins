@@ -35,7 +35,7 @@ pipeline {
                 }
             }
         }  
-        stage ('Provision - Destroy') {
+        stage ('Destroy Provision') {
             agent { label 'master' }
             when {expression { params.Provision == 'Destroy' }}
             steps {
@@ -51,6 +51,7 @@ pipeline {
         stage ('Configure - Ansible') {
             agent { label 'master' }
             when {expression { params.Configure == 'Yes' }}
+            when {expression { params.Provision != 'Destroy' }}
             steps {
                 dir('ansible') {
                     sh """
@@ -64,11 +65,13 @@ pipeline {
             }
         }
         stage('Install Dependencies') {
+            when {expression { params.Provision != 'Destroy' }}
             steps {
                 sh 'npm install'
             }
         }
         stage('Build and Test') {
+            when {expression { params.Provision != 'Destroy' }}
             parallel {
                 stage('Build') {
                     steps {
@@ -84,6 +87,7 @@ pipeline {
         }
         stage('Deploy') {
             when {branch 'main'}	
+            when {expression { params.Provision != 'Destroy' }}
             steps {
                 sshagent(credentials : ['agentkey']) {
                     sh "scp -rv -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null build/* ${username}@${server_ip}:/var/www/${sitename}/"
